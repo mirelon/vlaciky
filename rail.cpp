@@ -47,10 +47,64 @@ int Rail::plus(int a, int b){
 }
 
 void Rail::updateProbabilities(){
+	//checknem, ci zachytili nieco senzory
+	foreach(Sensor* s, sensors.uniqueKeys()){
+		if(s->check()){
+			qreal sanca=0.0;
+			foreach(Node* node,sensors.values(s))
+				sanca += node->pr;
+			//sucet pravdepodobnosti moznych stavov, ktore snima senzor
+			//chcem aby sa vyrovnal spolahlivosti senzora
+
+			//ak bola sanca nula, tak takyto hack, ale nemalo by sa to stavat:
+			qreal coef = s->spolahlivost / sensors.values(s).count();
+
+			if(sanca>0.0)
+				coef = s->spolahlivost / sanca;
+			foreach(Node* node,sensors.values(s)){
+				node->pr *= coef;
+				//pokracovanie hacku pre nulovu sancu
+				if(sanca==0.0)
+					node->pr = coef;
+			}
+
+			//a nakoniec vsetkym ostatnym nodom znizim pravdepodobnost
+			//aby sa to cele sumovalo do jednotky
+
+			//samozrejme hack, ked sanca=1.0
+			//vtedy sucet ostatnych je 0.0, preto nebudem nasobit
+			//ale rovno im pridelim spravodlivy podiel
+
+			//najprv zistim, kolko je vsetkych:
+			int vsetkych=0;
+			for(int i=0;i<nodes.size();i++)
+				vsetkych += nodes[i].count();
+			//odratam tych, kde nebol tento senzor aktivovany
+			vsetkych -= sensors.values(s).count();
+
+			//rozdelim to spravodlivo
+			if(vsetkych>0)
+				coef = (1.0 - s->spolahlivost) / vsetkych;
+			if(sanca<1.0)
+				coef = (1.0 - s->spolahlivost) / (1.0 - sanca);
+
+			for(int i=0;i<nodes.size();i++)
+				foreach(Node* node,nodes[i].values())
+					if(!sensors.keys(node).contains(s)){
+						//ak to pride sem, tak vsetkych>0
+						//lebo tento node medzi ne patri
+						node->pr *= coef;
+						if(sanca==1.0)
+							node->pr = coef;
+					}
+		}
+	}
+
+	//pohnem vlakom
 	for(int i=0;i<nodes.size();i++){
 		foreach(Node* node,nodes[i].values()){
 			foreach(Node* nextNode,node->next.keys()){
-				nextNode->newpr += node->pr * node->next.value(nextNode) + (qrand()%20)/20000.0;
+				nextNode->newpr += node->pr * node->next.value(nextNode);
 			}
 		}
 	}
