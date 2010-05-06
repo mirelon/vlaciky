@@ -6,5 +6,5 @@ Sensor::Sensor(qreal sp)
 }
 
 bool Sensor::check(){
-	return (qrand()%10==0);
+	return (qrand()%100==0);
 }
