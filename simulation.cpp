@@ -18,6 +18,7 @@ void Simulation::init(){
 
 void Simulation::run(){
 	stopped=false;
+        qDebug() << rail->dump();
 	while(!stopped){
 		rail->updateProbabilities();
 		for(int i=0;i<s->getInt("number_of_positions");i++){

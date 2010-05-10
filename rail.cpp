@@ -2,13 +2,13 @@
 
 Rail::Rail(int n,int maxSpeed,int sen)
 {
-	int p_change=0.2;
+	int p_change=0.6;
 
 	//vytvorime stavy
 	for(int i=0;i<n;i++){
 		QMap<int,Node*> pos;
 		for(int j=-maxSpeed;j<=maxSpeed;j++){
-			pos[j] = new Node();
+			pos[j] = new Node("("+QString::number(i)+","+QString::number(j)+")");
 			pos[j]->pr = 1.0/(n*(maxSpeed*2+1));
 		}
 		nodes.push_back(pos);
@@ -20,9 +20,9 @@ Rail::Rail(int n,int maxSpeed,int sen)
 		for(int j=-maxSpeed;j<=maxSpeed;j++){
 			nodes[i][j]->addNext(nodes[plus(i,j)][j],1.0-p_change);
 			if(j!=maxSpeed)
-				nodes[i][j]->addNext(nodes[plus(i,j+1)][j+1],p_change/((j==-maxSpeed)?1:2));
+				nodes[i][j]->addNext(nodes[plus(i,j+1)][j+1],p_change/((j==-maxSpeed)?1.0:2.0));
 			if(j!=-maxSpeed)
-				nodes[i][j]->addNext(nodes[plus(i,j-1)][j-1],p_change/((j==maxSpeed)?1:2));
+				nodes[i][j]->addNext(nodes[plus(i,j-1)][j-1],p_change/((j==maxSpeed)?1.0:2.0));
 		}
 	}
 
@@ -121,4 +121,15 @@ qreal Rail::getProb(int pos){
 	foreach(Node* node,nodes[pos].values())
 		sum += node->pr;
 	return sum;
+}
+
+QString Rail::dump(bool all){
+  QString d;
+  for(int i=0;i<nodes.size();i++){
+    foreach(Node* node,nodes[i].values()){
+      d += node->dump();
+    }
+    d += "\n";
+  }
+  return d;
 }

@@ -3,6 +3,7 @@
 
 #include<QList>
 #include<QMap>
+#include<QString>
 #include "node.h"
 #include "sensor.h"
 
@@ -15,6 +16,7 @@ public:
 	int plus(int a,int b);
 	void updateProbabilities();
 	qreal getProb(int pos);
+        QString dump(bool all=false);
 	QList<QMap<int,Node*> > nodes;
 	QMap<Sensor*,Node*> sensors;
 };
