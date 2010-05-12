@@ -2,7 +2,7 @@
 
 Rail::Rail(int n,int maxSpeed,int sen)
 {
-	qreal p_change=0.02;
+	qreal p_change=0.1;
 
 	//vytvorime stavy
 	for(int i=0;i<n;i++){
@@ -46,8 +46,7 @@ int Rail::plus(int a, int b){
 	return (a+b+nodes.size())%nodes.size();
 }
 
-void Rail::updateProbabilities(){
-	//checknem, ci zachytili nieco senzory
+void Rail::checkSensors(){
 	foreach(Sensor* s, sensors.uniqueKeys()){
 		if(s->check()){
 			qreal sanca=0.0;
@@ -99,8 +98,9 @@ void Rail::updateProbabilities(){
 					}
 		}
 	}
+}
 
-	//pohnem vlakom
+void Rail::moveTrain(){
 	for(int i=0;i<nodes.size();i++){
 		foreach(Node* node,nodes[i].values()){
 			foreach(Node* nextNode,node->next.keys()){
@@ -114,6 +114,21 @@ void Rail::updateProbabilities(){
 			node->newpr = 0.0;
 		}
 	}
+}
+
+void Rail::updateProbabilities(){
+	//checknem, ci zachytili nieco senzory
+	checkSensors();
+	//pohnem vlakom
+	moveTrain();
+}
+
+qreal Rail::sumProb(){
+	qreal sum=0.0;
+	for(int i=0;i<nodes.size();i++)
+		foreach(Node* node,nodes[i].values())
+			sum += node->pr;
+	return sum;
 }
 
 qreal Rail::getProb(int pos){

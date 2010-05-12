@@ -18,13 +18,13 @@ void Simulation::init(){
 
 void Simulation::run(){
 	stopped=false;
-        qDebug() << rail->dump();
+		//qDebug() << rail->dump();
 	while(!stopped){
 		rail->updateProbabilities();
 		for(int i=0;i<s->getInt("number_of_positions");i++){
 			emit setOpacity(i,rail->getProb(i));
 		}
 		emit updateEpoch();
-		this->msleep(100);
+		this->msleep(50);
 	}
 }
