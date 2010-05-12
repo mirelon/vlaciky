@@ -13,11 +13,11 @@ void Node::addNext(Node *n, qreal prob){
 }
 
 QString Node::dump(){
-  QString d = name + ": " + QString::number(pr);
+	QString d = name + ": " + QString::number(pr) + "\nNext:\n";
   QMapIterator<Node*, qreal> i(next);
   while(i.hasNext()){
     i.next();
-    d += "|" + i.key()->name + ": " + QString::number(i.value());
+	d += i.key()->name + ": " + QString::number(i.value()) + "\n";
   }
   return d;
 }
