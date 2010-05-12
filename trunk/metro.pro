@@ -10,12 +10,14 @@ SOURCES += main.cpp \
     node.cpp \
     rail.cpp \
     settings.cpp \
-    sensor.cpp
+    sensor.cpp \
+    mousesensor.cpp
 HEADERS += metro.h \
     simulation.h \
     graphics.h \
     node.h \
     rail.h \
     settings.h \
-    sensor.h
+    sensor.h \
+    mousesensor.h
 FORMS += metro.ui

@@ -24,15 +24,10 @@ Metro::Metro(QWidget *parent) :
 	simulation->graphics = graphics;
 	simulation->init();
 
-
-	QShortcut* f1 = new QShortcut( Qt::Key_F1, this );
-	connect(f1,SIGNAL(activated()),this,SLOT(on_actionStart_triggered()));
-
-	QShortcut* f2 = new QShortcut( Qt::Key_F2, this );
-	connect(f2,SIGNAL(activated()),this,SLOT(on_actionStop_triggered()));
-
 	QShortcut* esc = new QShortcut( Qt::Key_Escape, this );
 	connect(esc,SIGNAL(activated()),this,SLOT(close()));
+
+	setMouseTracking(true);
 }
 
 Metro::~Metro()
@@ -53,6 +48,10 @@ void Metro::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void Metro::mouseMoveEvent(QMouseEvent *e){
+	qDebug() << "move";
 }
 
 void Metro::on_actionStart_triggered()
