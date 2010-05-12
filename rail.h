@@ -6,6 +6,7 @@
 #include<QString>
 #include "node.h"
 #include "sensor.h"
+#include "mousesensor.h"
 
 class Rail
 {

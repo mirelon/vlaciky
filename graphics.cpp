@@ -39,7 +39,7 @@ QBrush Graphics::getBrush(qreal opacity){
 	QRadialGradient radial(0.5,0.5,0.5);
 	if(opacity<=0.2)
 		radial.setColorAt(0,Qt::blue);
-	else radial.setColorAt(0,QColor::fromHsl(200+200*opacity,255,120*(1.0-opacity)));
+	else radial.setColorAt(0,QColor::fromHsl(200+200*opacity,255,80*(1.0-opacity)));
 	radial.setColorAt(1,Qt::transparent);
 	radial.setCoordinateMode(QGradient::ObjectBoundingMode);
 	return QBrush(radial);

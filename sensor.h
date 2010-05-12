@@ -7,7 +7,7 @@ class Sensor
 {
 public:
 	Sensor(qreal sp=0.5);
-	bool check();
+	virtual bool check();
 	qreal spolahlivost;
 };
 

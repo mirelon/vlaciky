@@ -28,7 +28,7 @@ Rail::Rail(int n,int maxSpeed,int sen)
 
 	//pridame senzory
 	for(int i=0;i<sen;i++){
-		Sensor* s = new Sensor(0.5);
+		Sensor* s = new MouseSensor(0.5);
 		for(int j=-maxSpeed;j<=maxSpeed;j++)
 			sensors.insertMulti(s,nodes[(i*5)%n][j]);
 	}
@@ -47,6 +47,8 @@ int Rail::plus(int a, int b){
 }
 
 void Rail::checkSensors(){
+	//v multimape mam niektore senzory viackrat
+	//ked ten isty senzor snima na viacerych stavoch
 	foreach(Sensor* s, sensors.uniqueKeys()){
 		if(s->check()){
 			qreal sanca=0.0;
@@ -96,6 +98,9 @@ void Rail::checkSensors(){
 						if(sanca==1.0)
 							node->pr = coef;
 					}
+		}else{
+			//ak senzor nic nezachytil
+
 		}
 	}
 }

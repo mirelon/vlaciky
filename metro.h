@@ -18,6 +18,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+	void mouseMoveEvent(QMouseEvent *e);
 
 private:
     Ui::Metro *ui;
