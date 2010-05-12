@@ -13,12 +13,13 @@ class Graphics : public QObject
 public:
     Graphics();
 	void init();
+	QBrush getBrush(qreal opacity);
 public slots:
 	void setOpacity(int i,qreal opacity);
 	void updateEpoch();
 public:
 	QGraphicsView* graphicsView;
-	QMap<int,QGraphicsItem*> item;
+	QMap<int,QGraphicsEllipseItem*> item;
 	QGraphicsTextItem* epoch;
 	int X,Y,R,r,n;
 	qreal alpha;

@@ -14,7 +14,10 @@ public:
 	~Rail();
 	//plus modulo n
 	int plus(int a,int b);
+	void checkSensors();
+	void moveTrain();
 	void updateProbabilities();
+	qreal sumProb();
 	qreal getProb(int pos);
         QString dump(bool all=false);
 	QList<QMap<int,Node*> > nodes;
