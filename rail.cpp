@@ -2,7 +2,7 @@
 
 Rail::Rail(int n,int maxSpeed,int sen)
 {
-	int p_change=0.6;
+	qreal p_change=0.02;
 
 	//vytvorime stavy
 	for(int i=0;i<n;i++){
@@ -30,7 +30,7 @@ Rail::Rail(int n,int maxSpeed,int sen)
 	for(int i=0;i<sen;i++){
 		Sensor* s = new Sensor(0.5);
 		for(int j=-maxSpeed;j<=maxSpeed;j++)
-			sensors.insert(s,nodes[(i*5)%n][j]);
+			sensors.insertMulti(s,nodes[(i*5)%n][j]);
 	}
 }
 
