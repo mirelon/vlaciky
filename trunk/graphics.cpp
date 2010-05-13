@@ -2,6 +2,7 @@
 #include<QDebug>
 #include<cmath>
 #include<QRadialGradient>
+#include<QFile>
 
 Graphics::Graphics()
 {
@@ -10,29 +11,35 @@ Graphics::Graphics()
 void Graphics::init(){
 	QGraphicsScene* scene = new QGraphicsScene();
 	graphicsView->setScene(scene);
-
-	X = 80;
-	Y = 80;
-	R = 200;
 	r = 70;
-	alpha = 2.0*M_PI/n;
+	alpha = 360.0/n;
+	epoch = new QGraphicsTextItem("0");
+	graphicsView->scene()->addItem(epoch);
+	loadMap();
+}
 
+void Graphics::loadMap(){
+	QFile file(s->getString("map"));
+	file.open(QIODevice::ReadOnly);
+	QString track = file.readLine();
+	qreal smer = 180.0;
+	QPoint pos = QPoint(80,280);
+	const qreal step = 35.0;
+	if(track.length()<n)
+		for(int i=0;i<n-track.length();i++)
+			track.append('=');
 	for(int i=0;i<n;i++){
-		int xpos = X-R*sin(i*alpha);
-		int ypos = Y+R*cos(i*alpha);
-
-		QGraphicsEllipseItem* it = new QGraphicsEllipseItem(xpos,ypos,r,r);
+		pos += QPoint(step * cos(M_PI*smer/180.0),step * sin(M_PI*smer/180.0));
+		if(track[i]=='-')smer+=alpha;
+		if(track[i]=='+')smer-=alpha;
+		QGraphicsEllipseItem* it = new QGraphicsEllipseItem(pos.x(),pos.y(),r,r);
 		it->setBrush(getBrush(0.0));
 		it->setPen(QPen(Qt::NoPen));
-
 		it->setOpacity(0.0);
-
 		item.insert(i,it);
 		graphicsView->scene()->addItem(it);
 	}
-
-	epoch = new QGraphicsTextItem("0");
-	graphicsView->scene()->addItem(epoch);
+	file.close();
 }
 
 QBrush Graphics::getBrush(qreal opacity){

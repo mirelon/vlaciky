@@ -17,6 +17,7 @@ Metro::Metro(QWidget *parent) :
 	graphics = new Graphics();
 	graphics->graphicsView = ui->graphicsView;
 	graphics->n = n;
+	graphics->s = s;
 	graphics->init();
 
 	simulation = new Simulation();

@@ -6,6 +6,7 @@
 #include<QGraphicsEllipseItem>
 #include<QPoint>
 #include<QColor>
+#include "settings.h"
 
 class Graphics : public QObject
 {
@@ -13,6 +14,7 @@ class Graphics : public QObject
 public:
     Graphics();
 	void init();
+	void loadMap();
 	QBrush getBrush(qreal opacity);
 public slots:
 	void setOpacity(int i,qreal opacity);
@@ -21,7 +23,8 @@ public:
 	QGraphicsView* graphicsView;
 	QMap<int,QGraphicsEllipseItem*> item;
 	QGraphicsTextItem* epoch;
-	int X,Y,R,r,n;
+	Settings* s;
+	int r,n;
 	qreal alpha;
 };
 

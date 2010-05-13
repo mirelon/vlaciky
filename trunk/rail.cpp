@@ -27,8 +27,11 @@ Rail::Rail(int n,int maxSpeed,int sen)
 	}
 
 	//pridame senzory
-	for(int i=0;i<sen;i++){
-		Sensor* s = new MouseSensor(0.5);
+	Sensor* s = new MouseSensor(0.9);
+	for(int j=-maxSpeed;j<=maxSpeed;j++)
+		sensors.insertMulti(s,nodes[0][j]);
+	for(int i=1;i<sen;i++){
+		Sensor* s = new Sensor(0.5);
 		for(int j=-maxSpeed;j<=maxSpeed;j++)
 			sensors.insertMulti(s,nodes[(i*5)%n][j]);
 	}
