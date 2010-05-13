@@ -25,7 +25,8 @@ public:
 	QGraphicsTextItem* epoch;
 	Settings* s;
 	int r,n;
-	qreal alpha;
+	qreal alpha,step;
+	QString track;
 };
 
 #endif // GRAPHICS_H

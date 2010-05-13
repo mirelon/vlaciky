@@ -2,7 +2,6 @@
 #include<QDebug>
 #include<cmath>
 #include<QRadialGradient>
-#include<QFile>
 
 Graphics::Graphics()
 {
@@ -19,12 +18,10 @@ void Graphics::init(){
 }
 
 void Graphics::loadMap(){
-	QFile file(s->getString("map"));
-	file.open(QIODevice::ReadOnly);
-	QString track = file.readLine();
+	track = s->getString("map");
 	qreal smer = 180.0;
 	QPoint pos = QPoint(80,280);
-	const qreal step = 35.0;
+	step = 35.0;
 	if(track.length()<n)
 		for(int i=0;i<n-track.length();i++)
 			track.append('=');
@@ -39,7 +36,6 @@ void Graphics::loadMap(){
 		item.insert(i,it);
 		graphicsView->scene()->addItem(it);
 	}
-	file.close();
 }
 
 QBrush Graphics::getBrush(qreal opacity){
