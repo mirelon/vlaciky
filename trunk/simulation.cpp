@@ -18,6 +18,7 @@ void Simulation::init(){
 
 void Simulation::run(){
 	stopped=false;
+	rail->audioSensor->startRecording();
 		//qDebug() << rail->dump();
 	while(!stopped){
 		rail->updateProbabilities();
@@ -27,4 +28,5 @@ void Simulation::run(){
 		emit updateEpoch();
 		this->msleep(50);
 	}
+	rail->audioSensor->stopRecording();
 }

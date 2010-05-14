@@ -11,7 +11,9 @@ SOURCES += main.cpp \
     rail.cpp \
     settings.cpp \
     sensor.cpp \
-    mousesensor.cpp
+    mousesensor.cpp \
+    audiosensor.cpp \
+    audioinfo.cpp
 HEADERS += metro.h \
     simulation.h \
     graphics.h \
@@ -19,5 +21,8 @@ HEADERS += metro.h \
     rail.h \
     settings.h \
     sensor.h \
-    mousesensor.h
+    mousesensor.h \
+    audiosensor.h \
+    audioinfo.h
 FORMS += metro.ui
+QT += multimedia

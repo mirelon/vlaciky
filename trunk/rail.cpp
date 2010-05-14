@@ -2,7 +2,7 @@
 
 Rail::Rail(int n,int maxSpeed,int sen)
 {
-	qreal p_change=0.1;
+	qreal p_change=0.2;
 
 	//vytvorime stavy
 	for(int i=0;i<n;i++){
@@ -27,11 +27,18 @@ Rail::Rail(int n,int maxSpeed,int sen)
 	}
 
 	//pridame senzory
-	Sensor* s = new MouseSensor(0.95);
-	for(int j=-maxSpeed;j<=maxSpeed;j++)
+	Sensor* s = new MouseSensor(0.7);
+	for(int j=-maxSpeed;j<=maxSpeed;j++){
 		sensors.insertMulti(s,nodes[0][j]);
-	for(int i=1;i<sen;i++){
-		Sensor* s = new Sensor(0.9);
+		sensors.insertMulti(s,nodes[1][j]);
+	}
+	audioSensor = new AudioSensor(0.7);
+	for(int j=-maxSpeed;j<=maxSpeed;j++){
+		sensors.insertMulti(audioSensor,nodes[5][j]);
+		sensors.insertMulti(audioSensor,nodes[6][j]);
+	}
+	for(int i=2;i<sen;i++){
+		s = new Sensor(0.9);
 		for(int j=-maxSpeed;j<=maxSpeed;j++)
 			sensors.insertMulti(s,nodes[(i*5)%n][j]);
 	}
