@@ -11,17 +11,19 @@ void Graphics::init(){
 	QGraphicsScene* scene = new QGraphicsScene();
 	graphicsView->setScene(scene);
 	r = 70;
-	alpha = 360.0/n;
 	epoch = new QGraphicsTextItem("0");
+	epoch->setPos(75,80);
+	epoch->setScale(2.0);
 	graphicsView->scene()->addItem(epoch);
 	loadMap();
 }
 
 void Graphics::loadMap(){
 	track = s->getString("map");
+	alpha = 360.0/(track.count('-')-track.count('+'));
 	qreal smer = 180.0;
 	QPoint pos = QPoint(80,280);
-	step = 35.0;
+	step = 1000.0/track.length();
 	if(track.length()<n)
 		for(int i=0;i<n-track.length();i++)
 			track.append('=');

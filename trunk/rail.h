@@ -8,12 +8,14 @@
 #include "sensor.h"
 #include "mousesensor.h"
 #include "audiosensor.h"
+#include "settings.h"
 
 class Rail
 {
 public:
-	Rail(int n,int maxSpeed,int sen);
+	Rail();
 	~Rail();
+	void init();
 	//plus modulo n
 	int plus(int a,int b);
 	void checkSensors();
@@ -25,6 +27,7 @@ public:
 	QList<QMap<int,Node*> > nodes;
 	QMap<Sensor*,Node*> sensors;
 	AudioSensor* audioSensor;
+	Settings* s;
 };
 
 #endif // RAIL_H

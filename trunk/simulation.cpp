@@ -11,7 +11,9 @@ Simulation::~Simulation(){
 }
 
 void Simulation::init(){
-	rail = new Rail(s->getInt("number_of_positions"),s->getInt("max_speed"),s->getInt("number_of_sensors"));
+	rail = new Rail();
+	rail->s = s;
+	rail->init();
 	connect(this,SIGNAL(updateEpoch()),graphics,SLOT(updateEpoch()));
 	connect(this,SIGNAL(setOpacity(int,qreal)),graphics,SLOT(setOpacity(int,qreal)));
 }
@@ -22,7 +24,7 @@ void Simulation::run(){
 		//qDebug() << rail->dump();
 	while(!stopped){
 		rail->updateProbabilities();
-		for(int i=0;i<s->getInt("number_of_positions");i++){
+		for(int i=0;i<s->getString("map").length();i++){
 			emit setOpacity(i,rail->getProb(i));
 		}
 		emit updateEpoch();
