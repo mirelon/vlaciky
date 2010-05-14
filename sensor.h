@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Sensor
+class Sensor : public QObject
 {
 public:
 	Sensor(qreal sp=0.5);

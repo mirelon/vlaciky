@@ -7,6 +7,7 @@
 #include "node.h"
 #include "sensor.h"
 #include "mousesensor.h"
+#include "audiosensor.h"
 
 class Rail
 {
@@ -23,6 +24,7 @@ public:
         QString dump(bool all=false);
 	QList<QMap<int,Node*> > nodes;
 	QMap<Sensor*,Node*> sensors;
+	AudioSensor* audioSensor;
 };
 
 #endif // RAIL_H
