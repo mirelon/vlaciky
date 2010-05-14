@@ -1,8 +1,24 @@
 #include "rail.h"
+#include <QDebug>
 
-Rail::Rail(int n,int maxSpeed,int sen)
+Rail::Rail()
 {
-	qreal p_change=0.2;
+
+}
+
+Rail::~Rail(){
+	for(int i=0;i<nodes.size();i++)
+		foreach(Node* node,nodes[i].values())
+			delete node;
+	foreach(Sensor* s,sensors.uniqueKeys())
+		delete s;
+}
+
+void Rail::init(){
+	qreal p_change=s->getInt("p_change_speed")/100.0;
+	int maxSpeed = s->getInt("max_speed");
+	int sen = s->getInt("number_of_sensors");
+	int n = s->getString("map").length();
 
 	//vytvorime stavy
 	for(int i=0;i<n;i++){
@@ -26,30 +42,24 @@ Rail::Rail(int n,int maxSpeed,int sen)
 		}
 	}
 
+
 	//pridame senzory
-	Sensor* s = new MouseSensor(0.7);
+	Sensor* sensor = new MouseSensor(0.7);
 	for(int j=-maxSpeed;j<=maxSpeed;j++){
-		sensors.insertMulti(s,nodes[0][j]);
-		sensors.insertMulti(s,nodes[1][j]);
+		sensors.insertMulti(sensor,nodes[0][j]);
+		sensors.insertMulti(sensor,nodes[1][j]);
 	}
-	audioSensor = new AudioSensor(0.7);
+	audioSensor = new AudioSensor(0.4);
+	audioSensor->s = s;
 	for(int j=-maxSpeed;j<=maxSpeed;j++){
 		sensors.insertMulti(audioSensor,nodes[5][j]);
 		sensors.insertMulti(audioSensor,nodes[6][j]);
 	}
 	for(int i=2;i<sen;i++){
-		s = new Sensor(0.9);
+		sensor = new Sensor(0.9);
 		for(int j=-maxSpeed;j<=maxSpeed;j++)
-			sensors.insertMulti(s,nodes[(i*5)%n][j]);
+			sensors.insertMulti(sensor,nodes[(i*5)%n][j]);
 	}
-}
-
-Rail::~Rail(){
-	for(int i=0;i<nodes.size();i++)
-		foreach(Node* node,nodes[i].values())
-			delete node;
-	foreach(Sensor* s,sensors.uniqueKeys())
-		delete s;
 }
 
 int Rail::plus(int a, int b){

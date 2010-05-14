@@ -11,7 +11,7 @@ Metro::Metro(QWidget *parent) :
 
 	s = new Settings();
 	s->load();
-	int n = s->getInt("number_of_positions");
+	int n = s->getString("map").length();
 	qDebug() << "n=" << n;
 
 	graphics = new Graphics();

@@ -5,6 +5,7 @@
 #include<QFile>
 #include "sensor.h"
 #include "audioinfo.h"
+#include "settings.h"
 
 class AudioSensor : public Sensor
 {
@@ -23,6 +24,7 @@ public:
 	QAudioFormat format;
 	AudioInfo* audioInfo;
 	char* buffer;
+	Settings* s;
 };
 
 #endif // AUDIOSENSOR_H

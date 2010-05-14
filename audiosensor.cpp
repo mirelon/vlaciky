@@ -45,7 +45,7 @@ bool AudioSensor::check(){
 	int volume=0;
 	if(audioInput->bytesReady()>0)volume=readAudio();
 	if(audioInfo->bytesAvailable()>0)volume=readAudio();
-	return volume>10;
+	return volume>s->getInt("volume_threshold");
 }
 
 int AudioSensor::readAudio(){
