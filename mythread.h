@@ -13,8 +13,8 @@ public:
 	bool operator <(OpacityEvent &oe);
 	int epoch;
 	int pos;
-	float value;
-	float priority;
+	int value;
+	int priority;
 };
 
 class MyThread : public QThread
@@ -25,10 +25,10 @@ public:
 	void init();
 	void run();
 public slots:
-	void setOpacity(int i,qreal opacity);
+	void setOpacity(int i,int opacity);
 	void updateEpoch();
 signals:
-	void ssetOpacity(int i,qreal opacity);
+	void ssetOpacity(int i,int opacity);
 	void uupdateEpoch();
 public:
 	bool stopped;
@@ -36,8 +36,9 @@ public:
 	//chcem skor vykreslit veci s vacsou opacitou
 	std::priority_queue<OpacityEvent*> opac;
 	QMap<int,int> lastEpoch;
-	QMap<int,float> lastOpacity;
+	QMap<int,int> lastOpacity;
 	float avgPriority;
+	int sumPriority;
 	int epoch;
 	Graphics* graphics;
 };

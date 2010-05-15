@@ -11,10 +11,11 @@ MyThread::MyThread()
 }
 
 void MyThread::init(){
-	connect(this,SIGNAL(ssetOpacity(int,qreal)),graphics,SLOT(setOpacity(int,qreal)));
+	connect(this,SIGNAL(ssetOpacity(int,int)),graphics,SLOT(setOpacity(int,int)));
 	connect(this,SIGNAL(uupdateEpoch()),graphics,SLOT(updateEpoch()));
 	epoch = 0;
 	avgPriority=0;
+	sumPriority=0;
 }
 
 void MyThread::run(){
@@ -23,8 +24,9 @@ void MyThread::run(){
 		if(!opac.empty()){
 			OpacityEvent* oe = opac.top();
 			//qDebug() << "top: " << oe->priority;
+			sumPriority -= oe->priority;
 			if(opac.size()<2)avgPriority=0;else
-				avgPriority = ((float)(avgPriority*opac.size()-oe->priority))/((float)(opac.size()-1));
+				avgPriority = (float)sumPriority/opac.size();
 			opac.pop();
 			if(lastEpoch[oe->pos]<oe->epoch){
 				lastOpacity[oe->pos]=oe->value;
@@ -37,23 +39,24 @@ void MyThread::run(){
 	}
 }
 
-void MyThread::setOpacity(int i, qreal opacity){
+void MyThread::setOpacity(int i, int opacity){
 	//ak je halda velka, tak to do nej pridam
 	//len ak to ma vacsiu prioritu ako je polovica priemeru v halde
-	if(opac.size()>10 && 4.0*(opacity-lastOpacity.value(i,0))*(opacity-lastOpacity.value(i,0)) < avgPriority*avgPriority)
+	if(abs(opacity-lastOpacity.value(i,0)) <= avgPriority/2)
 		return;
 	OpacityEvent* oe = new OpacityEvent();
-	oe->priority = opacity-lastOpacity.value(i,0);
-	if(oe->priority<0)oe->priority*=-1;
+	oe->priority = abs(opacity-lastOpacity.value(i,0));
 	oe->epoch = epoch;
 	oe->pos = i;
-	oe->value = (float)opacity;
-	avgPriority = ((float)((avgPriority*opac.size())+oe->priority))/((float)(opac.size()+1));
+	oe->value = opacity;
 	opac.push(oe);
+	sumPriority += oe->priority;
+	avgPriority = (float)sumPriority/opac.size();
 }
 
 void MyThread::updateEpoch(){
 	qDebug() << "avg priority: " << avgPriority;
+	qDebug() << "heap: " << opac.size();
 	epoch++;
 	emit uupdateEpoch();
 }

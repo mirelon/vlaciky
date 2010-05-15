@@ -15,7 +15,7 @@ public:
 	void init();
 	void run();
 signals:
-	void setOpacity(int i,qreal opacity);
+	void setOpacity(int i,int opacity);
 	void updateEpoch();
 
 public:
