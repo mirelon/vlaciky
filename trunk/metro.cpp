@@ -14,21 +14,27 @@ Metro::Metro(QWidget *parent) :
 	int n = s->getString("map").length();
 	qDebug() << "n=" << n;
 
+	qDebug() << "graphics init";
 	graphics = new Graphics();
 	graphics->graphicsView = ui->graphicsView;
 	graphics->n = n;
 	graphics->s = s;
 	graphics->init();
 
+	qDebug() << "graphics init ok";
+	qDebug() << "simulation init";
 	simulation = new Simulation();
 	simulation->s = s;
-	simulation->graphics = graphics;
+	simulation->myThread->graphics = graphics;
 	simulation->init();
+
+	qDebug() << "simulation init ok";
 
 	QShortcut* esc = new QShortcut( Qt::Key_Escape, this );
 	connect(esc,SIGNAL(activated()),this,SLOT(close()));
 
 	setMouseTracking(true);
+	qDebug() << "init ok";
 }
 
 Metro::~Metro()

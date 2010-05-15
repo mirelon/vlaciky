@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include<QThread>
 #include<QGraphicsView>
 #include<QGraphicsItem>
 #include<QGraphicsEllipseItem>

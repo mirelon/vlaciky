@@ -2,9 +2,9 @@
 #define SIMULATION_H
 
 #include <QThread>
-#include "graphics.h"
 #include "rail.h"
 #include "settings.h"
+#include "mythread.h"
 
 class Simulation : public QThread
 {
@@ -19,7 +19,7 @@ signals:
 	void updateEpoch();
 
 public:
-	Graphics* graphics;
+	MyThread* myThread;
 	Rail* rail;
 	bool stopped;
 	Settings* s;

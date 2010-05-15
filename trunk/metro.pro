@@ -13,7 +13,9 @@ SOURCES += main.cpp \
     sensor.cpp \
     mousesensor.cpp \
     audiosensor.cpp \
-    audioinfo.cpp
+    audioinfo.cpp \
+    profiler.cpp \
+    mythread.cpp
 HEADERS += metro.h \
     simulation.h \
     graphics.h \
@@ -23,6 +25,8 @@ HEADERS += metro.h \
     sensor.h \
     mousesensor.h \
     audiosensor.h \
-    audioinfo.h
+    audioinfo.h \
+    profiler.h \
+    mythread.h
 FORMS += metro.ui
 QT += multimedia
