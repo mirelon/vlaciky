@@ -1,9 +1,11 @@
 #include "simulation.h"
+#include "profiler.h"
 #include<QDebug>
 
 Simulation::Simulation()
 {
 	stopped=true;
+	myThread = new MyThread();
 }
 
 Simulation::~Simulation(){
@@ -14,21 +16,36 @@ void Simulation::init(){
 	rail = new Rail();
 	rail->s = s;
 	rail->init();
-	connect(this,SIGNAL(updateEpoch()),graphics,SLOT(updateEpoch()));
-	connect(this,SIGNAL(setOpacity(int,qreal)),graphics,SLOT(setOpacity(int,qreal)));
+	qDebug() << "myThread init";
+	myThread->init();
+	qDebug() << "myThread init ok";
+	connect(this,SIGNAL(updateEpoch()),myThread,SLOT(updateEpoch()));
+	connect(this,SIGNAL(setOpacity(int,qreal)),myThread,SLOT(setOpacity(int,qreal)));
 }
 
 void Simulation::run(){
+	myThread->start();
 	stopped=false;
+	Profiler profiler;
 	rail->audioSensor->startRecording();
-		//qDebug() << rail->dump();
 	while(!stopped){
+		profiler.start("round");
+		profiler.start("update probabilities");
 		rail->updateProbabilities();
+		profiler.stop("update probabilities");
+		profiler.start("emitting");
 		for(int i=0;i<s->getString("map").length();i++){
 			emit setOpacity(i,rail->getProb(i));
 		}
 		emit updateEpoch();
+		profiler.stop("emitting");
 		this->msleep(50);
+		profiler.stop("round");
+		qDebug() << "heap: " << myThread->opac.size();
 	}
 	rail->audioSensor->stopRecording();
+	myThread->stopped = true;
+	qDebug() << profiler.getStats("round");
+	qDebug() << profiler.getStats("update probabilities");
+	qDebug() << profiler.getStats("emitting");
 }

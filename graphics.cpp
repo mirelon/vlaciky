@@ -51,7 +51,7 @@ QBrush Graphics::getBrush(qreal opacity){
 }
 
 void Graphics::setOpacity(int i, qreal opacity){
-	if(i<0 || i>=n){qDebug("setOpacity out of range");return;}
+	if(i<0 || i>=n){qDebug() << "setOpacity out of range: " << i;return;}
 	if(opacity<0.2){
 		item.value(i)->setOpacity(opacity*5);
 	}else{
