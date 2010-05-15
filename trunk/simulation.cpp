@@ -20,7 +20,7 @@ void Simulation::init(){
 	myThread->init();
 	qDebug() << "myThread init ok";
 	connect(this,SIGNAL(updateEpoch()),myThread,SLOT(updateEpoch()));
-	connect(this,SIGNAL(setOpacity(int,qreal)),myThread,SLOT(setOpacity(int,qreal)));
+	connect(this,SIGNAL(setOpacity(int,int)),myThread,SLOT(setOpacity(int,int)));
 }
 
 void Simulation::run(){
@@ -35,13 +35,12 @@ void Simulation::run(){
 		profiler.stop("update probabilities");
 		profiler.start("emitting");
 		for(int i=0;i<s->getString("map").length();i++){
-			emit setOpacity(i,rail->getProb(i));
+			emit setOpacity(i,(int)(800*rail->getProb(i)));
 		}
 		emit updateEpoch();
 		profiler.stop("emitting");
 		this->msleep(50);
 		profiler.stop("round");
-		qDebug() << "heap: " << myThread->opac.size();
 	}
 	rail->audioSensor->stopRecording();
 	myThread->stopped = true;

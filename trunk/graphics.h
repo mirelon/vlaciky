@@ -16,9 +16,9 @@ public:
     Graphics();
 	void init();
 	void loadMap();
-	QBrush getBrush(qreal opacity);
+	QBrush getBrush(int opacity);
 public slots:
-	void setOpacity(int i,qreal opacity);
+	void setOpacity(int i,int opacity);
 	void updateEpoch();
 public:
 	QGraphicsView* graphicsView;

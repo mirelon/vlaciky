@@ -40,20 +40,20 @@ void Graphics::loadMap(){
 	}
 }
 
-QBrush Graphics::getBrush(qreal opacity){
+QBrush Graphics::getBrush(int opacity){
 	QRadialGradient radial(0.5,0.5,0.5);
-	if(opacity<=0.2)
+	if(opacity<=160)
 		radial.setColorAt(0,Qt::blue);
-	else radial.setColorAt(0,QColor::fromHsl(200+160*opacity,255,80*(1.0-opacity)));
+	else radial.setColorAt(0,QColor::fromHsl(200+opacity/5,255,80-opacity/10));
 	radial.setColorAt(1,Qt::transparent);
 	radial.setCoordinateMode(QGradient::ObjectBoundingMode);
 	return QBrush(radial);
 }
 
-void Graphics::setOpacity(int i, qreal opacity){
+void Graphics::setOpacity(int i, int opacity){
 	if(i<0 || i>=n){qDebug() << "setOpacity out of range: " << i;return;}
-	if(opacity<0.2){
-		item.value(i)->setOpacity(opacity*5);
+	if(opacity<160){
+		item.value(i)->setOpacity(opacity/160.0);
 	}else{
 		item.value(i)->setOpacity(1.0);
 	}
