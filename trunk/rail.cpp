@@ -17,7 +17,6 @@ Rail::~Rail(){
 void Rail::init(){
 	qreal p_change=s->getInt("p_change_speed")/100.0;
 	int maxSpeed = s->getInt("max_speed");
-	int sen = s->getInt("number_of_sensors");
 	int n = s->getString("map").length();
 
 	//vytvorime stavy
@@ -45,20 +44,19 @@ void Rail::init(){
 
 	//pridame senzory
 	Sensor* sensor = new MouseSensor(0.7);
-	for(int j=-maxSpeed;j<=maxSpeed;j++){
-		sensors.insertMulti(sensor,nodes[0][j]);
-		sensors.insertMulti(sensor,nodes[1][j]);
+	for(int i=0;i<s->getInt("train_length");i++){
+		for(int j=-maxSpeed;j<=maxSpeed;j++){
+			if(j!=0)
+				sensors.insertMulti(sensor,nodes[i%n][j]);
+		}
 	}
+
 	audioSensor = new AudioSensor(0.4);
 	audioSensor->s = s;
-	for(int j=-maxSpeed;j<=maxSpeed;j++){
-		sensors.insertMulti(audioSensor,nodes[5][j]);
-		sensors.insertMulti(audioSensor,nodes[6][j]);
-	}
-	for(int i=2;i<sen;i++){
-		sensor = new Sensor(0.9);
-		for(int j=-maxSpeed;j<=maxSpeed;j++)
-			sensors.insertMulti(sensor,nodes[(i*5)%n][j]);
+	for(int i=5;i<s->getInt("train_length");i++){
+		for(int j=-maxSpeed;j<=maxSpeed;j++){
+			sensors.insertMulti(audioSensor,nodes[i%n][j]);
+		}
 	}
 }
 
