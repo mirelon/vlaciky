@@ -7,6 +7,8 @@
 #include "node.h"
 #include "sensor.h"
 #include "mousesensor.h"
+#include "mouseupsensor.h"
+#include "mousedownsensor.h"
 #include "audiosensor.h"
 #include "settings.h"
 
@@ -23,7 +25,7 @@ public:
 	void updateProbabilities();
 	qreal sumProb();
 	qreal getProb(int pos);
-        QString dump(bool all=false);
+	QString dump(bool all=false);
 	QList<QMap<int,Node*> > nodes;
 	QMap<Sensor*,Node*> sensors;
 	AudioSensor* audioSensor;

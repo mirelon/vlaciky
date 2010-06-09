@@ -1,11 +1,12 @@
-#include "mousesensor.h"
+#include "mouseupsensor.h"
 
-MouseSensor::MouseSensor(qreal sp){
+MouseUpSensor::MouseUpSensor(qreal sp)
+{
 	spolahlivost = sp;
 }
 
-bool MouseSensor::check(){
-	if(QCursor::pos().y()!=300){
+bool MouseUpSensor::check(){
+	if(QCursor::pos().y()<300){
 		moved=true;
 		QCursor::setPos(400,300);
 	}
