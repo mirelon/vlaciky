@@ -29,6 +29,10 @@ Povodne som chcel mat len dva thready - jeden rata pravdepodobnosti, druhy vykra
 	 * posliela spravy myThreadu (~1 - 16ms)
 	 * zaspi (50ms)
 
+== rail.cpp ==
+ * stara sa o topologiu, prepaja vytvara stavy, prepaja ich, pridava senzory
+ * vie odpovedat na lubovolne query tykajuce sa pravdepodobnosti
+
 
 = Thread 3 =
 
