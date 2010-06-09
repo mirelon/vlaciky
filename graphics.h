@@ -19,11 +19,11 @@ public:
 	QBrush getBrush(int opacity);
 public slots:
 	void setOpacity(int i,int opacity);
-	void updateEpoch();
+	void updateStatus(QString stat);
 public:
 	QGraphicsView* graphicsView;
 	QMap<int,QGraphicsEllipseItem*> item;
-	QGraphicsTextItem* epoch;
+	QGraphicsTextItem* status;
 	Settings* s;
 	int r,n;
 	qreal alpha,step;
