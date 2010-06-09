@@ -43,11 +43,16 @@ void Rail::init(){
 
 
 	//pridame senzory
-	Sensor* sensor = new MouseSensor(0.7);
+	//Sensor* sensor = new MouseSensor(0.7);
+	Sensor* upSensor = new MouseUpSensor(0.7);
+	Sensor* downSensor = new MouseDownSensor(0.7);
 	for(int i=0;i<s->getInt("train_length");i++){
 		for(int j=-maxSpeed;j<=maxSpeed;j++){
-			if(j!=0)
-				sensors.insertMulti(sensor,nodes[i%n][j]);
+			if(j<0)
+				sensors.insertMulti(upSensor,nodes[i%n][j]);
+			if(j>0)
+				sensors.insertMulti(downSensor,nodes[i%n][j]);
+
 		}
 	}
 

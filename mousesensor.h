@@ -1,6 +1,7 @@
 #ifndef MOUSESENSOR_H
 #define MOUSESENSOR_H
 
+#include <QCursor>
 #include "sensor.h"
 
 class MouseSensor : public Sensor
