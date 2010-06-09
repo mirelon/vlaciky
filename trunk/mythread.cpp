@@ -12,7 +12,7 @@ MyThread::MyThread()
 
 void MyThread::init(){
 	connect(this,SIGNAL(ssetOpacity(int,int)),graphics,SLOT(setOpacity(int,int)));
-	connect(this,SIGNAL(uupdateEpoch()),graphics,SLOT(updateEpoch()));
+	connect(this,SIGNAL(updateStatus(QString)),graphics,SLOT(updateStatus(QString)));
 	epoch = 0;
 	avgPriority=0;
 	sumPriority=0;
@@ -58,5 +58,5 @@ void MyThread::updateEpoch(){
 	qDebug() << "avg priority: " << avgPriority;
 	qDebug() << "heap: " << opac.size();
 	epoch++;
-	emit uupdateEpoch();
+	emit updateStatus("Epoch: "+QString::number(epoch)+"\nAverage priority: "+QString::number(avgPriority)+"\nHeap size: "+QString::number(opac.size()));
 }

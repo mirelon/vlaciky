@@ -29,7 +29,7 @@ public slots:
 	void updateEpoch();
 signals:
 	void ssetOpacity(int i,int opacity);
-	void uupdateEpoch();
+	void updateStatus(QString stat);
 public:
 	bool stopped;
 	//je to opacne kvoli priorite

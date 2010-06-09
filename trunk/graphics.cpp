@@ -11,10 +11,10 @@ void Graphics::init(){
 	QGraphicsScene* scene = new QGraphicsScene();
 	graphicsView->setScene(scene);
 	r = 70;
-	epoch = new QGraphicsTextItem("0");
-	epoch->setPos(75,80);
-	epoch->setScale(2.0);
-	graphicsView->scene()->addItem(epoch);
+	status = new QGraphicsTextItem("0");
+	status->setPos(50,90);
+	status->setScale(1.0);
+	graphicsView->scene()->addItem(status);
 	loadMap();
 }
 
@@ -60,7 +60,7 @@ void Graphics::setOpacity(int i, int opacity){
 	item.value(i)->setBrush(getBrush(opacity));
 }
 
-void Graphics::updateEpoch(){
-	epoch->setPlainText(QString::number(epoch->toPlainText().toInt()+1));
+void Graphics::updateStatus(QString stat){
+	status->setPlainText(stat);
 }
 
