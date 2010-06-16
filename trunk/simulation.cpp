@@ -27,7 +27,8 @@ void Simulation::run(){
 	myThread->start();
 	stopped=false;
 	Profiler profiler;
-	rail->audioSensor->startRecording();
+	if(s->getInt("audio_sensor")>=0)
+		rail->audioSensor->startRecording();
 	while(!stopped){
 		profiler.start("round");
 		profiler.start("update probabilities");
@@ -42,7 +43,8 @@ void Simulation::run(){
 		this->msleep(50);
 		profiler.stop("round");
 	}
-	rail->audioSensor->stopRecording();
+	if(s->getInt("audio_sensor")>=0)
+		rail->audioSensor->stopRecording();
 	myThread->stopped = true;
 	qDebug() << profiler.getStats("round");
 	qDebug() << profiler.getStats("update probabilities");

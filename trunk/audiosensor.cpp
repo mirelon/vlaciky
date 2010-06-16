@@ -45,6 +45,7 @@ bool AudioSensor::check(){
 	int volume=0;
 	if(audioInput->bytesReady()>0)volume=readAudio();
 	if(audioInfo->bytesAvailable()>0)volume=readAudio();
+	qDebug() << "volume: " << volume;
 	return volume>s->getInt("volume_threshold");
 }
 
@@ -56,6 +57,5 @@ int AudioSensor::readAudio(){
 	if(l > 0) {
 		audioInfo->write(buffer,l);
 	}
-	qDebug() << "sound volume=" << audioInfo->LinearMax();
 	return audioInfo->LinearMax();
 }

@@ -56,11 +56,13 @@ void Rail::init(){
 		}
 	}
 
-	audioSensor = new AudioSensor(0.4);
-	audioSensor->s = s;
-	for(int i=5;i<s->getInt("train_length");i++){
-		for(int j=-maxSpeed;j<=maxSpeed;j++){
-			sensors.insertMulti(audioSensor,nodes[i%n][j]);
+	if(s->getInt("audio_sensor")>=0){
+		audioSensor = new AudioSensor(0.4);
+		audioSensor->s = s;
+		for(int i=s->getInt("audio_sensor");i<s->getInt("audio_sensor")+s->getInt("train_length");i++){
+			for(int j=-maxSpeed;j<=maxSpeed;j++){
+				sensors.insertMulti(audioSensor,nodes[i%n][j]);
+			}
 		}
 	}
 }

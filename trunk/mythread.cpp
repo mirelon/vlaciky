@@ -55,8 +55,6 @@ void MyThread::setOpacity(int i, int opacity){
 }
 
 void MyThread::updateEpoch(){
-	qDebug() << "avg priority: " << avgPriority;
-	qDebug() << "heap: " << opac.size();
 	epoch++;
 	emit updateStatus("Epoch: "+QString::number(epoch)+"\nAverage priority: "+QString::number(avgPriority)+"\nHeap size: "+QString::number(opac.size()));
 }
