@@ -46,13 +46,12 @@ void Rail::init(){
 	//Sensor* sensor = new MouseSensor(0.7);
 	Sensor* upSensor = new MouseUpSensor(0.7);
 	Sensor* downSensor = new MouseDownSensor(0.7);
-	for(int i=0;i<s->getInt("train_length");i++){
+	for(int i=-s->getInt("train_length")/2;2*i<s->getInt("train_length");i++){
 		for(int j=-maxSpeed;j<=maxSpeed;j++){
 			if(j<0)
-				sensors.insertMulti(upSensor,nodes[i%n][j]);
+				sensors.insertMulti(upSensor,nodes[(s->getInt("mouse_sensor_position")+i)%n][j]);
 			if(j>0)
-				sensors.insertMulti(downSensor,nodes[i%n][j]);
-
+				sensors.insertMulti(downSensor,nodes[(s->getInt("mouse_sensor_position")+i)%n][j]);
 		}
 	}
 
@@ -64,6 +63,8 @@ void Rail::init(){
 				sensors.insertMulti(audioSensor,nodes[i%n][j]);
 			}
 		}
+		audioThread = new AudioThread();
+		audioThread->audioSensor = audioSensor;
 	}
 }
 

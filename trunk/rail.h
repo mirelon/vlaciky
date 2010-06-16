@@ -10,6 +10,7 @@
 #include "mouseupsensor.h"
 #include "mousedownsensor.h"
 #include "audiosensor.h"
+#include "audiothread.h"
 #include "settings.h"
 
 class Rail
@@ -29,6 +30,7 @@ public:
 	QList<QMap<int,Node*> > nodes;
 	QMap<Sensor*,Node*> sensors;
 	AudioSensor* audioSensor;
+	AudioThread* audioThread;
 	Settings* s;
 };
 
