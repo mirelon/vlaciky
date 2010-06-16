@@ -30,6 +30,7 @@ void AudioSensor::startRecording(){
 	audioInfo = new AudioInfo(audioInput);
 	audioInfo->start();
 	input = audioInput->start();
+	connect(input,SIGNAL(readyRead()),SLOT(readAudio()));
 	//audioInput->start(audioInfo);
 	buffer = new char[BUFFER_SIZE];
 }
@@ -42,14 +43,13 @@ void AudioSensor::stopRecording(){
 
 bool AudioSensor::check(){
 	//qDebug() << "check audio: " << audioInfo->bytesAvailable() << audioInput->bytesReady();
-	int volume=0;
-	if(audioInput->bytesReady()>0)volume=readAudio();
-	if(audioInfo->bytesAvailable()>0)volume=readAudio();
-	qDebug() << "volume: " << volume;
-	return volume>s->getInt("volume_threshold");
+	//if(audioInput->bytesReady()>0 || audioInfo->bytesAvailable()>0)volume=readAudio();
+	qDebug() << "volume: " << volume << ", processed=" << (int)(audioInput->processedUSecs()/10000)/100.0 << ", elapsed=" << (int)(audioInput->elapsedUSecs()/10000)/100.0;
+	return volume > s->getInt("volume_threshold");
 }
 
 int AudioSensor::readAudio(){
+	qDebug() << "read audio";
 	if(!audioInput)return 0;
 	qint64 len = audioInput->bytesReady();
 	if(len > 4096)len = 4096;

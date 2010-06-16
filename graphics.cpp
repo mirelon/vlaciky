@@ -21,9 +21,9 @@ void Graphics::init(){
 void Graphics::loadMap(){
 	track = s->getString("map");
 	alpha = 360.0/(track.count('-')-track.count('+'));
-	qreal smer = 180.0;
+	qreal smer = 0.0;
 	QPoint pos = QPoint(80,280);
-	step = 1000.0/track.length();
+	step = 3000.0/track.length();
 	if(track.length()<n)
 		for(int i=0;i<n-track.length();i++)
 			track.append('=');
@@ -52,6 +52,8 @@ QBrush Graphics::getBrush(int opacity){
 
 void Graphics::setOpacity(int i, int opacity){
 	if(i<0 || i>=n){qDebug() << "setOpacity out of range: " << i;return;}
+	item.value(i)->setOpacity(1.0-30.0/(opacity+30.0));
+	return;
 	if(opacity<160){
 		item.value(i)->setOpacity(opacity/160.0);
 	}else{

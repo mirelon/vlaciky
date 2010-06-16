@@ -15,6 +15,7 @@ public:
 	void startRecording();
 	void stopRecording();
 	bool check();
+public slots:
 	int readAudio();
 public:
 	bool moved;
@@ -25,6 +26,7 @@ public:
 	AudioInfo* audioInfo;
 	char* buffer;
 	Settings* s;
+	qreal volume;
 };
 
 #endif // AUDIOSENSOR_H

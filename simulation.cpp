@@ -24,11 +24,14 @@ void Simulation::init(){
 }
 
 void Simulation::run(){
+	qDebug() << "simulation run";
 	myThread->start();
 	stopped=false;
 	Profiler profiler;
-	if(s->getInt("audio_sensor")>=0)
+	if(s->getInt("audio_sensor")>=0){
 		rail->audioSensor->startRecording();
+		rail->audioThread->start();
+	}
 	while(!stopped){
 		profiler.start("round");
 		profiler.start("update probabilities");
@@ -40,11 +43,15 @@ void Simulation::run(){
 		}
 		emit updateEpoch();
 		profiler.stop("emitting");
-		this->msleep(50);
+		this->msleep(100);
 		profiler.stop("round");
 	}
-	if(s->getInt("audio_sensor")>=0)
+	qDebug() << "simulation stop";
+	if(s->getInt("audio_sensor")>=0){
+		rail->audioThread->stopped = true;
+		this->msleep(50);
 		rail->audioSensor->stopRecording();
+	}
 	myThread->stopped = true;
 	qDebug() << profiler.getStats("round");
 	qDebug() << profiler.getStats("update probabilities");

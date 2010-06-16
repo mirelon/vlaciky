@@ -13,7 +13,7 @@ public:
 	void start();
 	void stop();
 
-	int LinearMax();
+	qreal LinearMax();
 
 	qint64 readData(char *data, qint64 maxlen);
 	qint64 writeData(const char *data, qint64 len);
@@ -21,7 +21,7 @@ public:
 	QAudioInput* input;
 
 private:
-	int m_maxValue;
+	qreal m_maxValue;
 
 signals:
 	void update();

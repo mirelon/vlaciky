@@ -53,15 +53,15 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
 	if(m_maxValue>=(maxAmp-1)) clipping = true;
 
 	float value = ((float)m_maxValue/(float)maxAmp);
-	if(clipping) m_maxValue = 100;
-	else m_maxValue = (int)(value*100);
+	if(clipping) m_maxValue = 100.0;
+	else m_maxValue = value*100.0;
 
 	emit update();
 
 	return len;
 }
 
-int AudioInfo::LinearMax()
+qreal AudioInfo::LinearMax()
 {
 	return m_maxValue;
 }
